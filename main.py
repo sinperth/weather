@@ -349,6 +349,7 @@ st.write(
 
 
 # =========================
+# =========================
 # 연도별 기온 예측
 # =========================
 st.header("🔮 연도별 예상 기온")
@@ -361,7 +362,7 @@ selected_year = st.slider(
     step=1
 )
 
-# 전체 기간 회귀선으로 예측
+# 전체 기간 회귀선으로 예상 기온 계산
 selected_x = selected_year - BASE_YEAR
 
 predicted_temp = (
@@ -369,50 +370,19 @@ predicted_temp = (
     + intercept_all
 )
 
-
-# 크게 표시
-st.markdown(
-    f"""
-    <div style="
-        text-align:center;
-        padding:35px;
-        margin-top:15px;
-        margin-bottom:20px;
-        border-radius:20px;
-        background-color:rgba(128,128,128,0.12);
-    ">
-
-        <div style="
-            font-size:25px;
-        ">
-            {selected_year}년 예상 연평균기온
-        </div>
-
-        <div style="
-            font-size:65px;
-            font-weight:bold;
-            margin-top:8px;
-        ">
-            {predicted_temp:.2f} ℃
-        </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True
+# 예상 기온 크게 표시
+st.metric(
+    label=f"{selected_year}년 예상 연평균기온",
+    value=f"{predicted_temp:.2f} ℃"
 )
 
-
-# 관측 범위 밖의 연도일 경우 안내
-if (
-    selected_year < start_year
-    or selected_year > end_year
-):
+# 실제 관측 기간 밖이면 안내
+if selected_year < start_year or selected_year > end_year:
     st.warning(
         f"{selected_year}년은 실제 데이터를 사용한 기간 "
         f"({start_year}~{end_year}년) 밖입니다. "
         "따라서 전체 기간 회귀 직선을 연장해 계산한 예상값입니다."
     )
-
 
 st.caption(
     "예상 기온은 과거 기온의 선형적인 변화 추세를 "
