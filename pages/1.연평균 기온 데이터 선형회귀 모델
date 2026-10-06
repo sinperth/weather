@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -550,4 +549,3 @@ st.warning(
 st.caption(
     "※ 2025년 이후 자료와 관측일수가 300일 미만인 연도는 분석에서 제외했습니다."
 )
-```
